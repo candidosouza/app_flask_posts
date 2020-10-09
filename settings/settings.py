@@ -1,5 +1,9 @@
 import os
+import sqlite3
+
+
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
 
 class Setting:
@@ -11,6 +15,7 @@ class Setting:
         """Inicializa as configurações da aplicação"""
         self.__env = os.environ
         self.__app = Flask(__name__)
+        self.__db = SQLAlchemy(self.__app)
 
     @property
     def env(self):
@@ -22,7 +27,12 @@ class Setting:
 
     @property
     def app(self):
+        self.__app.config['SQLALCHEMY_DATABASE_URI'] = self.__env['SQLALCHEMY_DATABASE_URI']
         return self.__app
+    
+    @property
+    def db(self):
+        return self.__db
 
 
 setting = Setting()
