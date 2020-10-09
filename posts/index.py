@@ -1,14 +1,14 @@
-from flask import Blueprint
+from flask import Blueprint, render_template
 from models.posts import Post
 
-posts = Blueprint('posts', __name__)
+posts = Blueprint('post', __name__)
 
 
-@posts.route('/', methods=['GET'], endpoint='posts')
-def main():
-    return 'Posts routes'
+@posts.route('/', methods=['GET'])
+def new():
+    return "rendered posts"
 
 
-# @app.errorhandler(404)
-# def handler_error(error):
-#     return render_template('404.html', error=error)
+@posts.errorhandler(404)
+def handler_error(error):
+    return "Error 404"
